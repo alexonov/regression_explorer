@@ -137,6 +137,15 @@ def mode_a():
     if "best_mse_a" not in st.session_state or mse_man < st.session_state.best_mse_a:
         st.session_state.best_mse_a = mse_man
 
+    # Live formula — makes slope/intercept concrete
+    sign = "+" if w1 >= 0 else ""
+    st.markdown(
+        f"**Your model:** &nbsp;"
+        f"$\\hat{{price}} = {w0:.1f} + {w1:.3f} \\times sqft$"
+        f"&emsp;→&emsp; *for every extra m², price changes by {sign}{w1:.3f} k$*",
+        unsafe_allow_html=True,
+    )
+
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Your MSE",      f"{mse_man:,.1f}")
     c2.metric("Personal Best", f"{st.session_state.best_mse_a:,.1f}")
